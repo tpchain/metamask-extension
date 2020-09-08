@@ -116,7 +116,7 @@ export function getFourBytePrefix (data = '') {
   * @returns {boolean} - whether the transaction is calling an erc20 token method
   */
 export function isTokenMethodAction (transactionCategory) {
-  return [
+  return transactionCategory && [
     TOKEN_METHOD_TRANSFER,
     TOKEN_METHOD_APPROVE,
     TOKEN_METHOD_TRANSFER_FROM,

@@ -16,20 +16,21 @@ export default class NetworkForm extends PureComponent {
   }
 
   static propTypes = {
-    editRpc: PropTypes.func.isRequired,
-    showConfirmDeleteNetworkModal: PropTypes.func.isRequired,
+    editRpc: PropTypes.func,
+    showConfirmDeleteNetworkModal: PropTypes.func,
     rpcUrl: PropTypes.string,
     chainId: PropTypes.string,
     ticker: PropTypes.string,
     viewOnly: PropTypes.bool,
     networkName: PropTypes.string,
     onClear: PropTypes.func.isRequired,
-    setRpcTarget: PropTypes.func.isRequired,
+    setRpcTarget: PropTypes.func,
     networksTabIsInAddMode: PropTypes.bool,
     isCurrentRpcTarget: PropTypes.bool,
     blockExplorerUrl: PropTypes.string,
     rpcPrefs: PropTypes.object,
     rpcUrls: PropTypes.array,
+    hideFooter: PropTypes.bool,
   }
 
   state = {
@@ -327,6 +328,7 @@ export default class NetworkForm extends PureComponent {
       viewOnly,
       isCurrentRpcTarget,
       networksTabIsInAddMode,
+      hideFooter,
     } = this.props
     const {
       networkName,
@@ -383,32 +385,38 @@ export default class NetworkForm extends PureComponent {
           blockExplorerUrl,
           'optionalBlockExplorerUrl',
         )}
-        <div className="network-form__footer">
-          {
-            deletable && (
-              <Button
-                type="danger"
-                onClick={this.onDelete}
-              >
-                { t('delete') }
-              </Button>
+        {
+          hideFooter
+            ? null
+            : (
+              <div className="network-form__footer">
+                {
+                  deletable && (
+                    <Button
+                      type="danger"
+                      onClick={this.onDelete}
+                    >
+                      { t('delete') }
+                    </Button>
+                  )
+                }
+                <Button
+                  type="default"
+                  onClick={this.onCancel}
+                  disabled={viewOnly || this.stateIsUnchanged()}
+                >
+                  { t('cancel') }
+                </Button>
+                <Button
+                  type="secondary"
+                  disabled={isSubmitDisabled}
+                  onClick={this.onSubmit}
+                >
+                  { t('save') }
+                </Button>
+              </div>
             )
-          }
-          <Button
-            type="default"
-            onClick={this.onCancel}
-            disabled={viewOnly || this.stateIsUnchanged()}
-          >
-            { t('cancel') }
-          </Button>
-          <Button
-            type="secondary"
-            disabled={isSubmitDisabled}
-            onClick={this.onSubmit}
-          >
-            { t('save') }
-          </Button>
-        </div>
+        }
       </div>
     )
   }

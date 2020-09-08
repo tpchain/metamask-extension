@@ -33,6 +33,7 @@ import createOriginMiddleware from './lib/createOriginMiddleware'
 import createTabIdMiddleware from './lib/createTabIdMiddleware'
 import createOnboardingMiddleware from './lib/createOnboardingMiddleware'
 import { setupMultiplex } from './lib/stream-utils'
+import ApprovalController from './controllers/approval'
 import EnsController from './controllers/ens'
 import NetworkController from './controllers/network'
 import PreferencesController from './controllers/preferences'
@@ -105,6 +106,10 @@ export default class MetamaskController extends EventEmitter {
     // next, we will initialize the controllers
     // controller initialization order matters
 
+    this.approvalController = new ApprovalController({
+      showApprovalRequest: opts.showUserConfirmation,
+    })
+
     this.networkController = new NetworkController(initState.NetworkController)
     this.networkController.setInfuraProjectId(opts.infuraProjectId)
 
@@ -150,7 +155,7 @@ export default class MetamaskController extends EventEmitter {
       isUnlocked: this.isUnlocked.bind(this),
       initState: initState.AppStateController,
       onInactiveTimeout: () => this.setLocked(),
-      showUnlockRequest: opts.showUnlockRequest,
+      showUnlockRequest: opts.showUserConfirmation,
       preferencesStore: this.preferencesController.store,
     })
 
@@ -227,13 +232,13 @@ export default class MetamaskController extends EventEmitter {
     this.keyringController.on('unlock', () => this.emit('unlock'))
 
     this.permissionsController = new PermissionsController({
+      approvals: this.approvalController,
       getKeyringAccounts: this.keyringController.getAccounts.bind(this.keyringController),
       getRestrictedMethods,
       getUnlockPromise: this.appStateController.getUnlockPromise.bind(this.appStateController),
       notifyDomain: this.notifyConnections.bind(this),
       notifyAllDomains: this.notifyAllConnections.bind(this),
       preferences: this.preferencesController.store,
-      showPermissionRequest: opts.showPermissionRequest,
     }, initState.PermissionsController, initState.PermissionsMetadata)
 
     this.detectTokensController = new DetectTokensController({
@@ -272,7 +277,7 @@ export default class MetamaskController extends EventEmitter {
       trackMetaMetricsEvent: this.trackMetaMetricsEvent,
       getParticipateInMetrics: () => this.preferencesController.getParticipateInMetaMetrics(),
     })
-    this.txController.on('newUnapprovedTx', () => opts.showUnapprovedTx())
+    this.txController.on('newUnapprovedTx', () => opts.showUserConfirmation())
 
     this.txController.on(`tx:status-update`, async (txId, status) => {
       if (status === 'confirmed' || status === 'failed') {
@@ -357,8 +362,8 @@ export default class MetamaskController extends EventEmitter {
       PermissionsMetadata: this.permissionsController.store,
       ThreeBoxController: this.threeBoxController.store,
       SwapsController: this.swapsController.store,
-      // ENS Controller
       EnsController: this.ensController.store,
+      ApprovalController: this.approvalController.store,
     })
     this.memStore.subscribe(this.sendUpdate.bind(this))
 
@@ -471,6 +476,7 @@ export default class MetamaskController extends EventEmitter {
    */
   getApi () {
     const {
+      approvalController,
       keyringController,
       networkController,
       onboardingController,
@@ -632,6 +638,10 @@ export default class MetamaskController extends EventEmitter {
       setInitialGasEstimate: nodeify(swapsController.setInitialGasEstimate, swapsController),
       setCustomApproveTxData: nodeify(swapsController.setCustomApproveTxData, swapsController),
       setSwapsLiveness: nodeify(swapsController.setSwapsLiveness, swapsController),
+
+      // approval controller
+      resolvePendingApproval: approvalController.resolve.bind(approvalController),
+      rejectPendingApproval: approvalController.reject.bind(approvalController),
     }
   }
 
@@ -1143,7 +1153,7 @@ export default class MetamaskController extends EventEmitter {
   newUnsignedMessage (msgParams, req) {
     const promise = this.messageManager.addUnapprovedMessageAsync(msgParams, req)
     this.sendUpdate()
-    this.opts.showUnconfirmedMessage()
+    this.opts.showUserConfirmation()
     return promise
   }
 
@@ -1202,7 +1212,7 @@ export default class MetamaskController extends EventEmitter {
   async newUnsignedPersonalMessage (msgParams, req) {
     const promise = this.personalMessageManager.addUnapprovedMessageAsync(msgParams, req)
     this.sendUpdate()
-    this.opts.showUnconfirmedMessage()
+    this.opts.showUserConfirmation()
     return promise
   }
 
@@ -1257,7 +1267,7 @@ export default class MetamaskController extends EventEmitter {
   async newRequestDecryptMessage (msgParams, req) {
     const promise = this.decryptMessageManager.addUnapprovedMessageAsync(msgParams, req)
     this.sendUpdate()
-    this.opts.showUnconfirmedMessage()
+    this.opts.showUserConfirmation()
     return promise
   }
 
@@ -1342,7 +1352,7 @@ export default class MetamaskController extends EventEmitter {
   async newRequestEncryptionPublicKey (msgParams, req) {
     const promise = this.encryptionPublicKeyManager.addUnapprovedMessageAsync(msgParams, req)
     this.sendUpdate()
-    this.opts.showUnconfirmedMessage()
+    this.opts.showUserConfirmation()
     return promise
   }
 
@@ -1399,7 +1409,7 @@ export default class MetamaskController extends EventEmitter {
   newUnsignedTypedMessage (msgParams, req, version) {
     const promise = this.typedMessageManager.addUnapprovedMessageAsync(msgParams, req, version)
     this.sendUpdate()
-    this.opts.showUnconfirmedMessage()
+    this.opts.showUserConfirmation()
     return promise
   }
 
@@ -1689,6 +1699,14 @@ export default class MetamaskController extends EventEmitter {
     engine.push(createMethodMiddleware({
       origin,
       sendMetrics: this.trackMetaMetricsEvent,
+      customRpcExistsWith: this.customRpcExistsWith.bind(this),
+      requestUserApproval: this.approvalController
+        .addAndShowApprovalRequest.bind(this.approvalController),
+      addCustomRpc: ({
+        chainId, blockExplorerUrl, ticker, networkName, rpcUrl,
+      } = {}) => {
+        this.updateAndSetCustomRpc(rpcUrl, chainId, ticker, networkName, { blockExplorerUrl })
+      },
     }))
     // filter and subscription polyfills
     engine.push(filterMiddleware)
@@ -1974,7 +1992,9 @@ export default class MetamaskController extends EventEmitter {
    * @param {string} rpcUrl - A URL for a valid Ethereum RPC API.
    * @param {string} chainId - The chainId of the selected network.
    * @param {string} ticker - The ticker symbol of the selected network.
-   * @param {string} nickname - Optional nickname of the selected network.
+   * @param {string} [nickname] - Nickname of the selected network.
+   * @param {Object} [rpcPrefs] - RPC preferences.
+   * @param {string} [rpcPrefs.blockExplorerUrl] - URL of block explorer for the chain.
    * @returns {Promise<String>} - The RPC Target URL confirmed.
    */
   async updateAndSetCustomRpc (rpcUrl, chainId, ticker = 'ETH', nickname, rpcPrefs) {
@@ -2010,6 +2030,26 @@ export default class MetamaskController extends EventEmitter {
    */
   async delCustomRpc (rpcUrl) {
     await this.preferencesController.removeFromFrequentRpcList(rpcUrl)
+  }
+
+  /**
+   * Checks whether the given RPC info object matches at least one field of any
+   * existing frequent RPC list object.
+   *
+   * @param {Object} rpcInfo - The RPC endpoint properties and values to check.
+   * @returns {boolean} true if there exists an RPC list entry with any of the
+   * given propertiers, false otherwise.
+   */
+  customRpcExistsWith (rpcInfo) {
+    const frequentRpcListDetail = this.preferencesController.getFrequentRpcListDetail()
+    for (const existingRpcInfo of frequentRpcListDetail) {
+      for (const key of Object.keys(rpcInfo)) {
+        if (existingRpcInfo[key] === rpcInfo[key]) {
+          return true
+        }
+      }
+    }
+    return false
   }
 
   async initializeThreeBox () {

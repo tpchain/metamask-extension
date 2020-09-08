@@ -11,6 +11,7 @@ import ConfirmApprove from '../confirm-approve'
 import ConfirmTokenTransactionBaseContainer from '../confirm-token-transaction-base'
 import ConfirmDecryptMessage from '../confirm-decrypt-message'
 import ConfirmEncryptionPublicKey from '../confirm-encryption-public-key'
+import ConfirmAddEthereumChain from '../confirm-add-ethereum-chain'
 
 import {
   CONFIRM_TRANSACTION_ROUTE,
@@ -23,6 +24,7 @@ import {
   SIGNATURE_REQUEST_PATH,
   DECRYPT_MESSAGE_REQUEST_PATH,
   ENCRYPTION_PUBLIC_KEY_REQUEST_PATH,
+  ADD_ETHEREUM_CHAIN_REQUEST_PATH,
 } from '../../helpers/constants/routes'
 import ConfTx from './conf-tx'
 
@@ -154,6 +156,11 @@ export default class ConfirmTransaction extends Component {
             exact
             path={`${CONFIRM_TRANSACTION_ROUTE}/:id?${ENCRYPTION_PUBLIC_KEY_REQUEST_PATH}`}
             component={ConfirmEncryptionPublicKey}
+          />
+          <Route
+            exact
+            path={`${CONFIRM_TRANSACTION_ROUTE}/:id?${ADD_ETHEREUM_CHAIN_REQUEST_PATH}`}
+            component={ConfirmAddEthereumChain}
           />
           <Route path="*" component={ConfirmTransactionSwitch} />
         </Switch>

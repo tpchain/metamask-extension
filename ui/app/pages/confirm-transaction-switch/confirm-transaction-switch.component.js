@@ -13,6 +13,7 @@ import {
   SIGNATURE_REQUEST_PATH,
   DECRYPT_MESSAGE_REQUEST_PATH,
   ENCRYPTION_PUBLIC_KEY_REQUEST_PATH,
+  ADD_ETHEREUM_CHAIN_REQUEST_PATH,
 } from '../../helpers/constants/routes'
 import {
   TOKEN_METHOD_TRANSFER,
@@ -73,12 +74,14 @@ export default class ConfirmTransactionSwitch extends Component {
     const { txData } = this.props
     if (txData.txParams) {
       return this.redirectToTransaction()
-    } else if (txData.msgParams) {
+    } else if (txData.msgParams || (txData.type && txData.requestData)) {
       let pathname = `${CONFIRM_TRANSACTION_ROUTE}/${txData.id}${SIGNATURE_REQUEST_PATH}`
       if (txData.type === MESSAGE_TYPE.ETH_DECRYPT) {
         pathname = `${CONFIRM_TRANSACTION_ROUTE}/${txData.id}${DECRYPT_MESSAGE_REQUEST_PATH}`
       } else if (txData.type === MESSAGE_TYPE.ETH_GET_ENCRYPTION_PUBLIC_KEY) {
         pathname = `${CONFIRM_TRANSACTION_ROUTE}/${txData.id}${ENCRYPTION_PUBLIC_KEY_REQUEST_PATH}`
+      } else if (txData.type === MESSAGE_TYPE.ADD_ETHEREUM_CHAIN) {
+        pathname = `${CONFIRM_TRANSACTION_ROUTE}/${txData.id}${ADD_ETHEREUM_CHAIN_REQUEST_PATH}`
       }
       return <Redirect to={{ pathname }} />
     }
