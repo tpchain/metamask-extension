@@ -227,9 +227,9 @@ function setupController (initState, initLangCode) {
   const controller = new MetamaskController({
     infuraProjectId: process.env.INFURA_PROJECT_ID,
     // User confirmation callbacks:
+    showApprovalRequest: triggerUi,
     showUnconfirmedMessage: triggerUi,
     showUnapprovedTx: triggerUi,
-    showPermissionRequest: triggerUi,
     showUnlockRequest: triggerUi,
     openPopup,
     // initial state
