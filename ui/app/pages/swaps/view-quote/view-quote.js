@@ -468,6 +468,7 @@ export default function ViewQuote() {
           : null,
         initialGasPrice: gasPrice,
         initialGasLimit: maxGasLimit,
+        minimumGasLimit: nonCustomMaxGasLimit,
       }),
     )
 
