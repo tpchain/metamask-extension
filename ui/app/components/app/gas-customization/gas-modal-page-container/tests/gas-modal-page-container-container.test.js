@@ -76,6 +76,7 @@ describe('gas-modal-page-container container', function () {
           },
           currentCurrency: 'abc',
           conversionRate: 50,
+          usdConversionRate: 123,
           preferences: {
             showFiatInTestnets: false,
           },

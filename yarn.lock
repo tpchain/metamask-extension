@@ -2233,7 +2233,7 @@
     prop-types "^15.7.2"
     react-is "^16.8.0"
 
-"@metamask/controllers@^3.1.0":
+"@metamask/controllers@^3.1.0", "@metamask/controllers@^3.2.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@metamask/controllers/-/controllers-3.2.0.tgz#8ad2e63f7953d294712d9b5bacaea1c5261ce588"
   integrity sha512-Nysutcny5ddsr4eP4XvYuNMAwMqvCO/krughnNUzT69LljslutJyxS2MnT0MnWyKYNa6+CBaV9gxdV+Mm6fAFA==
