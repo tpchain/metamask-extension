@@ -1,5 +1,5 @@
 /**
- * Gives the caller a url at which the user can acquire eth, depending on the network they are in
+ * Gives the caller a url at which the user can acquire tpch, depending on the network they are in
  *
  * @param {Object} opts - Options required to determine the correct url
  * @param {string} opts.network The network for which to return a url
@@ -19,7 +19,7 @@ export default function getBuyEthUrl({ network, address, service }) {
     case 'wyre':
       return `https://pay.sendwyre.com/purchase?dest=ethereum:${address}&destCurrency=ETH&accountId=AC-7AG3W4XH4N2&paymentMethod=debit-card`
     case 'coinswitch':
-      return `https://metamask.coinswitch.co/?address=${address}&to=eth`
+      return `https://metamask.coinswitch.co/?address=${address}&to=tpch`
     case 'metamask-faucet':
       return 'https://faucet.metamask.io/'
     case 'rinkeby-faucet':

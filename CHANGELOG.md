@@ -1,4 +1,4 @@
-# Changelog
+﻿# Changelog
 
 ## Current Develop Branch
 - [#9612](https://github.com/MetaMask/metamask-extension/pull/9612): Update main-quote-summary designs/styles
@@ -7,7 +7,7 @@
 - [#9642](https://github.com/MetaMask/metamask-extension/pull/9642) Prevent excessive overflow from swap dropdowns
 - [#9658](https://github.com/MetaMask/metamask-extension/pull/9658): Fix sorting Quote Source column of quote sort list
 - [#9667](https://github.com/MetaMask/metamask-extension/pull/9667): Fix adding contact with QR code
-- [#9674](https://github.com/MetaMask/metamask-extension/pull/9674): Fix ENS resolution of `.eth` URLs with query strings
+- [#9674](https://github.com/MetaMask/metamask-extension/pull/9674): Fix ENS resolution of `.tpch` URLs with query strings
 - [#9691](https://github.com/MetaMask/metamask-extension/pull/9691): Bump @metamask/inpage-provider from 6.1.0 to 6.3.0
 - [#9700](https://github.com/MetaMask/metamask-extension/pull/9700): Provide image sizing so there's no jump when opening the swaps token search
 - [#9568](https://github.com/MetaMask/metamask-extension/pull/9568): Add ses lockdown to build system
@@ -340,7 +340,7 @@
 - [#7410](https://github.com/MetaMask/metamask-extension/pull/7410): Fix sourcemaps for Sentry
 - [#7420](https://github.com/MetaMask/metamask-extension/pull/7420): Adds and end to end test for typed signature requests
 - [#7439](https://github.com/MetaMask/metamask-extension/pull/7439): Add metricsEvent to contextTypes (#7439)
-- [#7419](https://github.com/MetaMask/metamask-extension/pull/7419): Added webRequest.RequestFilter to filter main_frame .eth requests (#7419)
+- [#7419](https://github.com/MetaMask/metamask-extension/pull/7419): Added webRequest.RequestFilter to filter main_frame .tpch requests (#7419)
 
 ## 7.5.2 Thu Nov 14 2019
 - [#7414](https://github.com/MetaMask/metamask-extension/pull/7414): Ensure SignatureRequestOriginal 'beforeunload' handler is bound
@@ -665,7 +665,7 @@
 ## 5.3.1 Wed Jan 16 2019
 
 - [#5966](https://github.com/MetaMask/metamask-extension/pull/5966): Update Slovenian translation
-- [#6005](https://github.com/MetaMask/metamask-extension/pull/6005): Set auto conversion off for token/eth conversion
+- [#6005](https://github.com/MetaMask/metamask-extension/pull/6005): Set auto conversion off for token/tpch conversion
 - [#6008](https://github.com/MetaMask/metamask-extension/pull/6008): Fix confirm screen for sending ether tx with hex data
 - [#5999](https://github.com/MetaMask/metamask-extension/pull/5999): Refine app description
 - [#5997](https://github.com/MetaMask/metamask-extension/pull/5997): Harden Drizzle test runner script
@@ -759,7 +759,7 @@
 - Fix bug where data lookups like balances would get stale data (stopped block-tracker bug)
 - Transaction Details now show entry for onchain failure
 - [#5559](https://github.com/MetaMask/metamask-extension/pull/5559) Localize language names in translation select list
-- [#5283](https://github.com/MetaMask/metamask-extension/pull/5283): Fix bug when eth.getCode() called with no contract
+- [#5283](https://github.com/MetaMask/metamask-extension/pull/5283): Fix bug when tpch.getCode() called with no contract
 - [#5563](https://github.com/MetaMask/metamask-extension/pull/5563#pullrequestreview-166769174) Feature: improve Hatian Creole translations
 - Feature: improve Slovenian translations
 - Add support for alternate `wallet_watchAsset` rpc method name
@@ -1448,17 +1448,17 @@ rollback to 3.10.0 due to bug
 - net_version has been made synchronous.
 - Test suite for migrations expanded.
 - Network now changeable from lock screen.
-- Improve test coverage of eth.sign behavior, including a code example of verifying a signature.
+- Improve test coverage of tpch.sign behavior, including a code example of verifying a signature.
 
 ## 3.2.2 2017-2-8
 
-- Revert eth.sign behavior to the previous one with a big warning.  We will be gradually implementing the new behavior over the coming time. https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign
+- Revert tpch.sign behavior to the previous one with a big warning.  We will be gradually implementing the new behavior over the coming time. https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign
 
-- Improve test coverage of eth.sign behavior, including a code example of verifying a signature.
+- Improve test coverage of tpch.sign behavior, including a code example of verifying a signature.
 
 ## 3.2.2 2017-2-8
 
-- Revert eth.sign behavior to the previous one with a big warning.  We will be gradually implementing the new behavior over the coming time. https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign
+- Revert tpch.sign behavior to the previous one with a big warning.  We will be gradually implementing the new behavior over the coming time. https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign
 
 ## 3.2.1 2017-2-8
 
@@ -1486,7 +1486,7 @@ rollback to 3.10.0 due to bug
 
 ## 3.0.1 2017-1-17
 
-- Fixed bug that prevented eth.sign from working.
+- Fixed bug that prevented tpch.sign from working.
 - Fix the displaying of transactions that have been submitted to the network in Transaction History
 
 ## 3.0.0 2017-1-16
@@ -1757,7 +1757,7 @@ popup notification opens up.
 
 - Change out export icon for key.
 - Unify copy to clipboard icon
-- Fixed eth.sign behavior.
+- Fixed tpch.sign behavior.
 - Fix behavior of batched outbound transactions.
 
 ## 2.4.0 2016-06-20
@@ -1828,7 +1828,7 @@ popup notification opens up.
 
 ## 1.8.0 2016-05-10
 
-- Add support for calls to `eth.sign`.
+- Add support for calls to `tpch.sign`.
 - Moved account exporting within subview of the account detail view.
 - Added buttons to the account export process.
 - Improved visual appearance of account detail transition where button heights would change.

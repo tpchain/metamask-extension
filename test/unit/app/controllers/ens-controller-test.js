@@ -40,20 +40,20 @@ describe('EnsController', function () {
       }
       const ens = new EnsController({
         ens: {
-          reverse: sinon.stub().withArgs(address).returns('peaksignal.eth'),
-          lookup: sinon.stub().withArgs('peaksignal.eth').returns(address),
+          reverse: sinon.stub().withArgs(address).returns('peaksignal.tpch'),
+          lookup: sinon.stub().withArgs('peaksignal.tpch').returns(address),
         },
         networkStore,
       })
 
       const name = await ens.reverseResolveAddress(address)
-      assert.equal(name, 'peaksignal.eth')
+      assert.equal(name, 'peaksignal.tpch')
     })
 
     it('should only resolve an ENS name once', async function () {
       const address = '0x8e5d75d60224ea0c33d0041e75de68b1c3cb6dd5'
-      const reverse = sinon.stub().withArgs(address).returns('peaksignal.eth')
-      const lookup = sinon.stub().withArgs('peaksignal.eth').returns(address)
+      const reverse = sinon.stub().withArgs(address).returns('peaksignal.tpch')
+      const lookup = sinon.stub().withArgs('peaksignal.tpch').returns(address)
       const networkStore = {
         subscribe: sinon.spy(),
       }
@@ -65,8 +65,8 @@ describe('EnsController', function () {
         networkStore,
       })
 
-      assert.equal(await ens.reverseResolveAddress(address), 'peaksignal.eth')
-      assert.equal(await ens.reverseResolveAddress(address), 'peaksignal.eth')
+      assert.equal(await ens.reverseResolveAddress(address), 'peaksignal.tpch')
+      assert.equal(await ens.reverseResolveAddress(address), 'peaksignal.tpch')
       assert.ok(lookup.calledOnce)
       assert.ok(reverse.calledOnce)
     })
@@ -78,8 +78,8 @@ describe('EnsController', function () {
       }
       const ens = new EnsController({
         ens: {
-          reverse: sinon.stub().withArgs(address).returns('peaksignal.eth'),
-          lookup: sinon.stub().withArgs('peaksignal.eth').returns('0xfoo'),
+          reverse: sinon.stub().withArgs(address).returns('peaksignal.tpch'),
+          lookup: sinon.stub().withArgs('peaksignal.tpch').returns('0xfoo'),
         },
         networkStore,
       })
@@ -95,8 +95,8 @@ describe('EnsController', function () {
       }
       const ens = new EnsController({
         ens: {
-          reverse: sinon.stub().withArgs(address).returns('peaksignal.eth'),
-          lookup: sinon.stub().withArgs('peaksignal.eth').returns(ZERO_ADDRESS),
+          reverse: sinon.stub().withArgs(address).returns('peaksignal.tpch'),
+          lookup: sinon.stub().withArgs('peaksignal.tpch').returns(ZERO_ADDRESS),
         },
         networkStore,
       })
@@ -116,10 +116,10 @@ describe('EnsController', function () {
       }
       const ens = new EnsController({
         ens: {
-          reverse: sinon.stub().withArgs(address).returns('peaksignal.eth'),
+          reverse: sinon.stub().withArgs(address).returns('peaksignal.tpch'),
           lookup: sinon
             .stub()
-            .withArgs('peaksignal.eth')
+            .withArgs('peaksignal.tpch')
             .returns(ZERO_X_ERROR_ADDRESS),
         },
         networkStore,

@@ -233,7 +233,7 @@ export default function BuildQuote({
     fromToken,
   ])
 
-  // If the eth balance changes while on build quote, we update the selected from token
+  // If the tpch balance changes while on build quote, we update the selected from token
   useEffect(() => {
     if (
       fromToken?.address === ETH_SWAPS_TOKEN_OBJECT.address &&

@@ -789,7 +789,7 @@ export function updateSendEnsResolutionError(errorMessage) {
 export function signTokenTx(tokenAddress, toAddress, amount, txData) {
   return (dispatch) => {
     dispatch(showLoadingIndication())
-    const token = global.eth.contract(abi).at(tokenAddress)
+    const token = global.tpch.contract(abi).at(tokenAddress)
     token.transfer(toAddress, addHexPrefix(amount), txData).catch((err) => {
       dispatch(hideLoadingIndication())
       dispatch(displayWarning(err.message))

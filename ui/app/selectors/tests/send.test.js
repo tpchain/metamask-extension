@@ -38,9 +38,9 @@ import {
 import mockState from './send-selectors-test-data'
 
 describe('send selectors', function () {
-  const tempGlobalEth = { ...global.eth }
+  const tempGlobalEth = { ...global.tpch }
   beforeEach(function () {
-    global.eth = {
+    global.tpch = {
       contract: sinon.stub().returns({
         at: (address) => `mockAt:${address}`,
       }),
@@ -48,7 +48,7 @@ describe('send selectors', function () {
   })
 
   afterEach(function () {
-    global.eth = tempGlobalEth
+    global.tpch = tempGlobalEth
   })
 
   describe('accountsWithSendEtherInfoSelector()', function () {
@@ -93,7 +93,7 @@ describe('send selectors', function () {
   })
 
   describe('getConversionRate()', function () {
-    it('should return the eth conversion rate', function () {
+    it('should return the tpch conversion rate', function () {
       assert.deepEqual(getConversionRate(mockState), 1200.88200327)
     })
   })

@@ -204,7 +204,7 @@ async function estimateGasForSend({
 
   // if recipient has no code, gas is 21k max:
   if (!sendToken && !data) {
-    const code = Boolean(to) && (await global.eth.getCode(to))
+    const code = Boolean(to) && (await global.tpch.getCode(to))
     // Geth will return '0x', and ganache-core v2.2.1 will return '0x0'
     const codeIsEmpty = !code || code === '0x' || code === '0x0'
     if (codeIsEmpty) {

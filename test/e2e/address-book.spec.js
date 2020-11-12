@@ -202,7 +202,7 @@ describe('MetaMask', function () {
     })
   })
 
-  describe('Adds an entry to the address book and sends eth to that address', function () {
+  describe('Adds an entry to the address book and sends tpch to that address', function () {
     it('starts a send transaction', async function () {
       await driver.clickElement(By.css('[data-testid="eth-overview-send"]'))
       await driver.delay(regularDelayMs)

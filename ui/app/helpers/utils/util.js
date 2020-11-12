@@ -234,7 +234,7 @@ export function normalizeToWei(amount, currency) {
 
 export function normalizeEthStringToWei(str) {
   const parts = str.split('.')
-  let eth = new ethUtil.BN(parts[0], 10).mul(bnTable.wei)
+  let tpch = new ethUtil.BN(parts[0], 10).mul(bnTable.wei)
   if (parts[1]) {
     let decimal = parts[1]
     while (decimal.length < 18) {
@@ -244,9 +244,9 @@ export function normalizeEthStringToWei(str) {
       decimal = decimal.slice(0, 18)
     }
     const decimalBN = new ethUtil.BN(decimal, 10)
-    eth = eth.add(decimalBN)
+    tpch = tpch.add(decimalBN)
   }
-  return eth
+  return tpch
 }
 
 const multiple = new ethUtil.BN('10000', 10)
@@ -261,7 +261,7 @@ export function isHex(str) {
 }
 
 export function getContractAtAddress(tokenAddress) {
-  return global.eth.contract(abi).at(tokenAddress)
+  return global.tpch.contract(abi).at(tokenAddress)
 }
 
 export function getRandomFileName() {

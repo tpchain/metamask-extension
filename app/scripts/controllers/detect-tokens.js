@@ -77,7 +77,7 @@ export default class DetectTokensController {
   }
 
   async _getTokenBalances(tokens) {
-    const ethContract = this.web3.eth
+    const ethContract = this.web3.tpch
       .contract(SINGLE_CALL_BALANCES_ABI)
       .at(SINGLE_CALL_BALANCES_ADDRESS)
     return new Promise((resolve, reject) => {

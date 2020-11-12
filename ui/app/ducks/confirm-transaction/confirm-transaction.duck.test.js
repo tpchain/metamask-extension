@@ -464,7 +464,7 @@ describe('Confirm Transaction Duck', function () {
 
   describe('Thunk actions', function () {
     beforeEach(function () {
-      global.eth = {
+      global.tpch = {
         getCode: sinon
           .stub()
           .callsFake((address) =>
@@ -476,7 +476,7 @@ describe('Confirm Transaction Duck', function () {
     })
 
     afterEach(function () {
-      global.eth.getCode.resetHistory()
+      global.tpch.getCode.resetHistory()
     })
 
     it('updates txData and gas on an existing transaction in confirmTransaction', function () {

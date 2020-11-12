@@ -140,7 +140,7 @@ function setupWeb3Connection(connectionStream) {
   providerStream.on('error', console.error.bind(console))
   global.ethereumProvider = providerStream
   global.ethQuery = new EthQuery(providerStream)
-  global.eth = new Eth(providerStream)
+  global.tpch = new Eth(providerStream)
 }
 
 /**

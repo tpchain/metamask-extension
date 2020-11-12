@@ -196,7 +196,7 @@ export default class AccountTracker {
   }
 
   /**
-   * balanceChecker is deployed on main eth (test)nets and requires a single call
+   * balanceChecker is deployed on main tpch (test)nets and requires a single call
    * for all other networks, calls this._updateAccount for each account in this.store
    *
    * @returns {Promise} - after all account balances updated
@@ -271,7 +271,7 @@ export default class AccountTracker {
   async _updateAccountsViaBalanceChecker(addresses, deployedContractAddress) {
     const { accounts } = this.store.getState()
     this.web3.setProvider(this._provider)
-    const ethContract = this.web3.eth
+    const ethContract = this.web3.tpch
       .contract(SINGLE_CALL_BALANCES_ABI)
       .at(deployedContractAddress)
     const ethBalance = ['0x0']

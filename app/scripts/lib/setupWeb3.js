@@ -33,14 +33,14 @@ export default function setupWeb3(log) {
     enumerable: false,
     writable: true,
     configurable: true,
-    value: web3.eth,
+    value: web3.tpch
   })
 
   // Setup logging of nested property usage
   if (shouldLogUsage) {
     // web3 namespaces with common and uncommon dapp actions
     const includedTopKeys = [
-      'eth',
+      'tpch',
       'db',
       'shh',
       'net',

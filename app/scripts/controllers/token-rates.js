@@ -29,7 +29,7 @@ export default class TokenRatesController {
     const contractExchangeRates = {}
     const nativeCurrency = this.currency
       ? this.currency.state.nativeCurrency.toLowerCase()
-      : 'eth'
+      : 'tpch'
     const pairs = this._tokens.map((token) => token.address).join(',')
     const query = `contract_addresses=${pairs}&vs_currencies=${nativeCurrency}`
     if (this._tokens.length > 0) {

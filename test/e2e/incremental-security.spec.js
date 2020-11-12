@@ -138,7 +138,7 @@ describe('MetaMask', function () {
       await driver.delay(regularDelayMs)
     })
 
-    it('sends eth to the current account', async function () {
+    it('sends tpch to the current account', async function () {
       const addressInput = await driver.findElement(By.css('#address'))
       await addressInput.sendKeys(publicAddress)
       await driver.delay(regularDelayMs)
@@ -153,7 +153,7 @@ describe('MetaMask', function () {
       await driver.switchToWindow(extension)
     })
 
-    it('should have the correct amount of eth', async function () {
+    it('should have the correct amount of tpch', async function () {
       const balances = await driver.findElements(
         By.css('.currency-display-component__text'),
       )
@@ -232,7 +232,7 @@ describe('MetaMask', function () {
       await driver.delay(regularDelayMs)
     })
 
-    it('should have the correct amount of eth', async function () {
+    it('should have the correct amount of tpch', async function () {
       const balances = await driver.findElements(
         By.css('.currency-display-component__text'),
       )

@@ -51,7 +51,7 @@ export function getSendTokenAddress(state) {
 
 export function getSendTokenContract(state) {
   const sendTokenAddress = getSendTokenAddress(state)
-  return sendTokenAddress ? global.eth.contract(abi).at(sendTokenAddress) : null
+  return sendTokenAddress ? global.tpch.contract(abi).at(sendTokenAddress) : null
 }
 
 export function getSendAmount(state) {

@@ -322,7 +322,7 @@ describe('send utils', function () {
     }
 
     beforeEach(function () {
-      global.eth = {
+      global.tpch = {
         getCode: sinon
           .stub()
           .callsFake((address) =>
@@ -333,7 +333,7 @@ describe('send utils', function () {
 
     afterEach(function () {
       baseMockParams.estimateGasMethod.resetHistory()
-      global.eth.getCode.resetHistory()
+      global.tpch.getCode.resetHistory()
     })
 
     it('should call ethQuery.estimateGasForSend with the expected params', async function () {

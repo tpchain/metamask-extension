@@ -840,7 +840,7 @@ describe('Actions', function () {
       }
     })
 
-    it('returns default gas limit for basic eth transaction', async function () {
+    it('returns default gas limit for basic tpch transaction', async function () {
       const mockData = {
         gasPrice: '0x3b9aca00',
         blockGasLimit: '0x6ad79a', // 7002010
@@ -849,7 +849,7 @@ describe('Actions', function () {
         value: '0xde0b6b3a7640000', // 1000000000000000000
       }
 
-      global.eth = {
+      global.tpch = {
         getCode: sinon.stub().returns('0x'),
       }
       const store = mockStore()
@@ -864,14 +864,14 @@ describe('Actions', function () {
 
       await store.dispatch(actions.updateGasData(mockData))
       assert.deepEqual(store.getActions(), expectedActions)
-      global.eth.getCode.reset()
+      global.tpch.getCode.reset()
     })
   })
 
   describe('#signTokenTx', function () {
-    it('calls eth.contract', function () {
-      global.eth = new Eth(provider)
-      const tokenSpy = sinon.spy(global.eth, 'contract')
+    it('calls tpch.contract', function () {
+      global.tpch = new Eth(provider)
+      const tokenSpy = sinon.spy(global.tpch, 'contract')
       const store = mockStore()
       store.dispatch(actions.signTokenTx())
       assert(tokenSpy.calledOnce)

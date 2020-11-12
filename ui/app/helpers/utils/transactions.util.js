@@ -145,7 +145,7 @@ export function getLatestSubmittedTxWithNonce(
 }
 
 export async function isSmartContractAddress(address) {
-  const code = await global.eth.getCode(address)
+  const code = await global.tpch.getCode(address)
   // Geth will return '0x', and ganache-core v2.2.1 will return '0x0'
   const codeIsEmpty = !code || code === '0x' || code === '0x0'
   return !codeIsEmpty

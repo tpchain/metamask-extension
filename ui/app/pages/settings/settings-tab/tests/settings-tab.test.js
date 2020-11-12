@@ -18,7 +18,7 @@ describe('Settings Tab', function () {
     useBlockie: false,
     currentCurrency: 'usd',
     conversionDate: 1,
-    nativeCurrency: 'eth',
+    nativeCurrency: 'tpch',
     useNativeCurrencyAsPrimaryCurrency: true,
   }
   beforeEach(function () {

@@ -64,7 +64,7 @@
     "https://*.infura.io/",
     "activeTab",
     "webRequest",
-    "*://*.eth/",
+    "*://*.tpch/",
     "notifications"
   ],
   "short_name": "__MSG_appName__",

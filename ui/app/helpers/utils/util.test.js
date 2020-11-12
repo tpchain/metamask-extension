@@ -1,4 +1,4 @@
-import assert from 'assert'
+﻿import assert from 'assert'
 import ethUtil from 'ethereumjs-util'
 import * as util from './util'
 
@@ -9,25 +9,25 @@ describe('util', function () {
   }
 
   describe('#parseBalance', function () {
-    it('should render 0.01 eth correctly', function () {
+    it('should render 0.01 tpch correctly', function () {
       const input = '0x2386F26FC10000'
       const output = util.parseBalance(input)
       assert.deepEqual(output, ['0', '01'])
     })
 
-    it('should render 12.023 eth correctly', function () {
+    it('should render 12.023 tpch correctly', function () {
       const input = 'A6DA46CCA6858000'
       const output = util.parseBalance(input)
       assert.deepEqual(output, ['12', '023'])
     })
 
-    it('should render 0.0000000342422 eth correctly', function () {
+    it('should render 0.0000000342422 tpch correctly', function () {
       const input = '0x7F8FE81C0'
       const output = util.parseBalance(input)
       assert.deepEqual(output, ['0', '0000000342422'])
     })
 
-    it('should render 0 eth correctly', function () {
+    it('should render 0 tpch correctly', function () {
       const input = '0x0'
       const output = util.parseBalance(input)
       assert.deepEqual(output, ['0', '0'])
@@ -214,7 +214,7 @@ describe('util', function () {
 
   describe('normalizing values', function () {
     describe('#normalizeToWei', function () {
-      it('should convert an eth to the appropriate equivalent values', function () {
+      it('should convert an tpch to the appropriate equivalent values', function () {
         const valueTable = {
           wei: '1000000000000000000',
           kwei: '1000000000000000',
@@ -247,7 +247,7 @@ describe('util', function () {
     })
 
     describe('#normalizeEthStringToWei', function () {
-      it('should convert decimal eth to pure wei BN', function () {
+      it('should convert decimal tpch to pure wei BN', function () {
         const input = '1.23456789'
         const output = util.normalizeEthStringToWei(input)
         assert.equal(output.toString(10), '1234567890000000000')

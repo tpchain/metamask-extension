@@ -134,7 +134,7 @@ describe('MetaMaskController', function () {
   })
 
   describe('#getAccounts', function () {
-    it('returns first address when dapp calls web3.eth.getAccounts', async function () {
+    it('returns first address when dapp calls web3.tpch.getAccounts', async function () {
       const password = 'a-fake-password'
       await metamaskController.createNewVaultAndRestore(password, TEST_SEED)
 

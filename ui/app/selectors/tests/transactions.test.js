@@ -11,7 +11,7 @@ import {
 
 describe('Transaction Selectors', function () {
   describe('unapprovedMessagesSelector', function () {
-    it('returns eth sign msg from unapprovedMsgs', function () {
+    it('returns tpch sign msg from unapprovedMsgs', function () {
       const msg = {
         id: 1,
         msgParams: {

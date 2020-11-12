@@ -22,7 +22,7 @@ sendButton.addEventListener('click', function () {
 
   var serializedTx = tx.serialize();
 
-  web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', (transactionResult) => {
+  web3.tpch.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', (transactionResult) => {
     document.getElementById('success').innerHTML = `Successfully sent transaction: ${transactionResult.transactionHash}`
   })
 })
